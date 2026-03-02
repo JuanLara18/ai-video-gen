@@ -1,0 +1,33 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+
+# Generated output
+output/
+
+# Proprietary content (use *.example.json as templates)
+input/prompts.json
+input/prompts.md
+input/presentation_sequence.json
+input/images/
+style_packs.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
