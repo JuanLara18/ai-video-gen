@@ -1,0 +1,14 @@
+{
+  "corporate_clean": {
+    "style_suffix": "Consistent corporate visual identity throughout. Clean, modern, professional cinematography. No amateur or stock-footage feel.",
+    "negative_prompt_base": "text on screen, subtitles, watermark, face distortion, morphing, warping, inconsistent branding, wrong logo, misspelled text, low quality, blurry, amateur look"
+  },
+  "tech_futuristic": {
+    "style_suffix": "Futuristic tech company aesthetic. Dark backgrounds with holographic data visualizations. Neon accents in blue and green. Clean, minimal UI elements floating in space.",
+    "negative_prompt_base": "text on screen, subtitles, watermark, face distortion, morphing, warping, low quality, blurry, amateur look, bright daylight, outdoor scenes"
+  },
+  "warm_documentary": {
+    "style_suffix": "Warm cinematic documentary look. Natural lighting with golden hour tones. Handheld camera feel but steady. Authentic, human, inspirational.",
+    "negative_prompt_base": "text on screen, subtitles, watermark, face distortion, morphing, warping, low quality, blurry, neon colors, sci-fi elements, dark backgrounds"
+  }
+}
