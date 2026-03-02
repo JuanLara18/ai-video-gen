@@ -1,0 +1,61 @@
+{
+  "title": "My Project - Presentation Sequence",
+  "description": "Curated clip sequence for the final presentation, in narrative order.",
+  "logo_path": "input/images/logo.png",
+  "sections": [
+    {
+      "section": "INTRO",
+      "label": "Introduction",
+      "clips": [
+        {
+          "sequence_order": 1,
+          "clip_id": "clip_2_1a",
+          "role": "Opening visual — sets the tone",
+          "adjustments": null,
+          "status": "approved"
+        }
+      ]
+    },
+    {
+      "section": "DIGITAL_TWIN",
+      "label": "Digital Twin",
+      "clips": [
+        {
+          "sequence_order": 2,
+          "clip_id": "clip_3_1a",
+          "role": "Physical-to-digital transformation",
+          "adjustments": "Make the physical-to-digital contrast more pronounced",
+          "status": "approved_with_adjustments"
+        }
+      ]
+    },
+    {
+      "section": "CLOSING",
+      "label": "Closing",
+      "clips": [
+        {
+          "sequence_order": 3,
+          "clip_id": "clip_5_1a",
+          "role": "Epic aerial closing shot",
+          "adjustments": null,
+          "status": "approved"
+        }
+      ]
+    }
+  ],
+  "transversal_adjustments": {
+    "logo": {
+      "description": "Apply consistent logo overlay to all presentation clips",
+      "path": "input/images/logo.png",
+      "position": "bottom-right",
+      "scale": 0.08,
+      "opacity": 0.85,
+      "margin_px": 30
+    },
+    "style_coherence": {
+      "description": "Enforce visual consistency across all selected prompts",
+      "style_suffix": "Consistent corporate visual identity. Clean, modern, professional.",
+      "negative_prompt_base": "text on screen, subtitles, watermark, face distortion, morphing, warping, inconsistent branding"
+    }
+  }
+}

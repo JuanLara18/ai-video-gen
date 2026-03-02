@@ -1,0 +1,59 @@
+[
+  {
+    "clip_id": "clip_1_1a",
+    "block": "Block 1 - Opening",
+    "scene": "Scene 1.1 - The facility alive",
+    "prompt": "Wide aerial crane shot slowly descending over a massive distribution center viewed from above. Long aisles with multi-level shelving packed with products stretch in every direction. Forklifts circulate between aisles, workers in high-visibility vests walk with order sheets. Industrial high-bay lighting, constant movement across the floor. Corporate documentary style, 1080p. Consistent cinematic corporate documentary look, warm industrial color grading. Audio: Deep ambient hum of machinery, distant forklift beeps, faint conveyor belt rumble.",
+    "negative_prompt": "text on screen, subtitles, watermark, face distortion, morphing, warping, floating objects",
+    "duration": 8,
+    "reference_image_path": "",
+    "notes": ""
+  },
+  {
+    "clip_id": "clip_1_1b",
+    "block": "Block 1 - Opening",
+    "scene": "Scene 1.1 - The facility alive",
+    "prompt": "Smooth tracking shot at ground level moving through a wide warehouse aisle. Multi-level steel shelving towers on both sides filled with boxes and products. A forklift passes in the background, two workers walk with handheld scanners. Warm industrial lighting from above. Corporate documentary style, 1080p. Audio: Forklift engine humming, footsteps on concrete, distant scanner beeps.",
+    "negative_prompt": "text on screen, subtitles, watermark, face distortion, morphing, warping, duplicate people",
+    "duration": 6,
+    "reference_image_path": "input/images/ref_interior.png",
+    "notes": "Use a reference image of the real facility interior to anchor the visual look."
+  },
+  {
+    "clip_id": "clip_2_1a",
+    "block": "Block 2 - Data Visualization",
+    "scene": "Scene 2.1 - The numbers that matter",
+    "prompt": "Slow dolly-in on an elegant dark background with softly glowing data particles floating like dust in light. Subtle green and white light points drift gently through the frame. Minimalist, futuristic corporate atmosphere. Calm, sophisticated mood, 1080p. Audio: Low ambient electronic hum, soft crystalline chimes, subtle digital texture.",
+    "negative_prompt": "text on screen, subtitles, watermark, face distortion, morphing, warping, numbers, dashboards",
+    "duration": 8,
+    "reference_image_path": "",
+    "notes": "",
+    "presentation_order": 1,
+    "presentation_section": "INTRO"
+  },
+  {
+    "clip_id": "clip_3_1a",
+    "block": "Block 3 - Digital Twin",
+    "scene": "Scene 3.1 - Digitization",
+    "prompt": "Slow dolly forward through a frozen warehouse scene being digitized. Physical objects gradually transform into wireframe holographic representations made of glowing green and blue light lines. The physical world dissolves point by point into clean digital data. Dark background emerges behind the wireframes. Elegant sci-fi corporate aesthetic, 1080p. Audio: Ethereal digital transformation sound, soft crystalline tones.",
+    "negative_prompt": "text on screen, subtitles, watermark, face distortion, morphing, warping, garbled artifacts",
+    "duration": 8,
+    "reference_image_path": "",
+    "notes": "",
+    "presentation_order": 2,
+    "presentation_section": "DIGITAL_TWIN",
+    "presentation_adjustments": "Make the physical-to-digital contrast more pronounced"
+  },
+  {
+    "clip_id": "clip_5_1a",
+    "block": "Block 5 - Closing",
+    "scene": "Scene 5.1 - The future",
+    "prompt": "Wide aerial shot slowly ascending over a facility at golden hour. Warm sunset light streams through large windows. Overlaid on the physical structure, luminous data lines flow through the aisles like veins of light. A sense of pride and transformation. Cinematic epic corporate style, 1080p. Audio: Swelling cinematic ambient tones, emotionally triumphant tone.",
+    "negative_prompt": "text on screen, subtitles, watermark, face distortion, morphing, warping",
+    "duration": 8,
+    "reference_image_path": "input/images/ref_aerial.jpg",
+    "notes": "Use a real aerial photo as start frame if available.",
+    "presentation_order": 3,
+    "presentation_section": "CLOSING"
+  }
+]
