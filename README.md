@@ -62,7 +62,7 @@ flowchart TD
 ### 1. Clone and setup
 
 ```bash
-git clone https://github.com/YOUR_USER/veo-video-pipeline.git
+git clone https://github.com/JuanLara18/veo-video-pipeline.git
 cd veo-video-pipeline
 
 python -m venv .venv
