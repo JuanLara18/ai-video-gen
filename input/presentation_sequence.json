@@ -1,0 +1,188 @@
+{
+  "title": "IA en Falabella - Secuencia de Presentación",
+  "description": "Secuencia curada de clips seleccionados para la presentación final, en orden narrativo.",
+  "logo_path": "input/images/logo.png",
+  "sections": [
+    {
+      "section": "INTRO",
+      "label": "IA en Falabella - Los 3 Frentes",
+      "clips": [
+        {
+          "sequence_order": 1,
+          "clip_id": "clip_4_1a",
+          "role": "Muestra los 3 pilares: Gemelos Digitales, Entrenar la IA (RL), Modelo Workforce",
+          "adjustments": "Capturar muy bien cada una de las 3 caras que juntas nos dan la Simulación",
+          "status": "approved_with_adjustments"
+        },
+        {
+          "sequence_order": 2,
+          "clip_id": "clip_4_1a_collapse",
+          "variant_of": "clip_4_1b",
+          "role": "Clip puente que colapsa los 3 frentes en uno solo",
+          "adjustments": "Usar la imagen final del video de convergencia (clip_4_1b) como start frame para crear continuidad. Los 3 hologramas convergen en una sola visualización unificada de Simulación.",
+          "status": "new_clip_needed"
+        }
+      ]
+    },
+    {
+      "section": "GEMELOS",
+      "label": "Gemelos Digitales",
+      "clips": [
+        {
+          "sequence_order": 3,
+          "clip_id": "clip_3a_2b",
+          "role": "Digitalización del CEDI - wireframe holográfico",
+          "adjustments": "Más real y más digital a la vez: reforzar contraste entre objetos físicos que aún se ven sólidos y la transformación wireframe",
+          "status": "approved_with_adjustments"
+        },
+        {
+          "sequence_order": 4,
+          "clip_id": "clip_3a_2a",
+          "role": "Pausa y escaneo digital del CEDI congelado",
+          "adjustments": null,
+          "status": "approved"
+        },
+        {
+          "sequence_order": 5,
+          "clip_id": "clip_3a_4a",
+          "role": "Impacto - optimización en tiempo real del mapa holográfico",
+          "adjustments": null,
+          "status": "approved"
+        },
+        {
+          "sequence_order": 6,
+          "clip_id": "clip_5_1a_gemelos",
+          "variant_of": "clip_5_1a",
+          "role": "Vista aérea del CD con foco en gemelos digitales",
+          "adjustments": "Reorientar hacia gemelos digitales: sin atardecer (luz neutra/día), enfatizar las líneas de datos digitales superpuestas sobre la estructura física. Más fusión físico-digital que cierre épico.",
+          "status": "variant_needed"
+        }
+      ]
+    },
+    {
+      "section": "RL",
+      "label": "Simulación Inteligente (Reinforcement Learning)",
+      "clips": [
+        {
+          "sequence_order": 7,
+          "clip_id": "clip_3b_2a",
+          "role": "Agentes aprendiendo - movimiento caótico",
+          "adjustments": null,
+          "status": "approved"
+        },
+        {
+          "sequence_order": 8,
+          "clip_id": "clip_3b_2b",
+          "role": "Agentes optimizados - movimiento coordinado",
+          "adjustments": null,
+          "status": "approved"
+        },
+        {
+          "sequence_order": 9,
+          "clip_id": "clip_5_1a_rl",
+          "variant_of": "clip_5_1a",
+          "role": "Sobre el CD, dividirlo en zonas con asignación dinámica de personas",
+          "adjustments": "Cambiar concepto: en lugar de vista épica aérea, mostrar el CD desde arriba dividiéndose en zonas claramente delimitadas con colores. En cada zona aparecen íconos de personas que se asignan dinámicamente según demanda. Transición de vista física a vista esquemática de zonificación.",
+          "status": "variant_needed"
+        }
+      ]
+    },
+    {
+      "section": "MODELO",
+      "label": "Modelo Fuerza de Trabajo",
+      "clips": [
+        {
+          "sequence_order": 10,
+          "clip_id": "clip_3b_4a",
+          "role": "Resultado - optimización de rutas (split screen)",
+          "adjustments": "Mejorar timing: que los cronómetros/tiempos de comparación sean más claros y visualmente legibles. Que la diferencia de tiempo entre ruta larga y corta sea más evidente.",
+          "status": "approved_with_adjustments"
+        },
+        {
+          "sequence_order": 11,
+          "clip_id": "clip_3c_1a",
+          "role": "Problema de la dotación - desbalance de zonas",
+          "adjustments": null,
+          "status": "approved"
+        },
+        {
+          "sequence_order": 12,
+          "clip_id": "clip_3c_1a_demand",
+          "variant_of": "clip_3c_1a",
+          "role": "Relación de demanda y dinámica de asignación por zonas",
+          "adjustments": "Nueva versión que muestre explícitamente la relación entre demanda entrante (como flujo de datos/pedidos) y múltiples variables (volumen, estacionalidad, tipo de producto). Visualizar la dinámica de asignación: personas moviéndose entre zonas en respuesta a cambios de demanda en tiempo real.",
+          "status": "variant_needed"
+        },
+        {
+          "sequence_order": 13,
+          "clip_id": "clip_3c_3a",
+          "role": "Resultado - operación balanceada",
+          "adjustments": null,
+          "status": "approved"
+        }
+      ]
+    },
+    {
+      "section": "ADICIONALES",
+      "label": "Otros Componentes IA",
+      "clips": [
+        {
+          "sequence_order": 14,
+          "clip_id": "clip_4_2a",
+          "role": "Lectura automática de documentos",
+          "adjustments": null,
+          "status": "approved"
+        },
+        {
+          "sequence_order": 15,
+          "clip_id": "clip_4_2b",
+          "role": "Alertas inteligentes y corrección de anomalías",
+          "adjustments": null,
+          "status": "approved"
+        },
+        {
+          "sequence_order": 16,
+          "clip_id": "clip_4_2c",
+          "role": "Contratos inteligentes y IA conversacional",
+          "adjustments": null,
+          "status": "approved"
+        },
+        {
+          "sequence_order": 17,
+          "clip_id": "clip_3b_3b",
+          "role": "Re-slotting automático de productos",
+          "adjustments": null,
+          "status": "approved"
+        }
+      ]
+    },
+    {
+      "section": "CIERRE",
+      "label": "Cierre",
+      "clips": [
+        {
+          "sequence_order": 18,
+          "clip_id": "clip_5_1b",
+          "role": "Vista aérea final ascendente sobre el CD al atardecer",
+          "adjustments": null,
+          "status": "approved"
+        }
+      ]
+    }
+  ],
+  "transversal_adjustments": {
+    "logo": {
+      "description": "Incorporar logo Falabella consistente en todos los clips usando input/images/logo.png como overlay en post-proceso",
+      "path": "input/images/logo.png",
+      "position": "bottom-right",
+      "scale": 0.08,
+      "opacity": 0.85,
+      "margin_px": 30
+    },
+    "style_coherence": {
+      "description": "Forzar consistencia visual transversal en todos los prompts seleccionados",
+      "style_suffix": "Consistent Falabella corporate visual identity. Clean, modern, professional. Falabella brand green (#00B140) and white palette with soft blue accents.",
+      "negative_prompt_base": "text on screen, subtitles, watermark, face distortion, morphing, warping, inconsistent branding, wrong logo, misspelled text"
+    }
+  }
+}

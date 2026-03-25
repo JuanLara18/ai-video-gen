@@ -1,4 +1,0 @@
-google-genai
-python-dotenv
-google-cloud-storage
-imageio-ffmpeg

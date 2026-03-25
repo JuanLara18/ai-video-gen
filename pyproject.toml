@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "ai-video-gen"
+version = "0.1.0"
+description = "JSON-driven batch video generation pipeline supporting multiple AI providers"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+keywords = ["video", "ai", "generative", "veo", "vertex-ai", "pipeline", "video-generation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# Core deps only — provider-specific extras installed separately
+dependencies = [
+    "python-dotenv>=1.0.0",
+    "imageio-ffmpeg>=0.4.9",
+]
+
+[project.optional-dependencies]
+# Google Veo via Vertex AI
+veo = [
+    "google-genai>=0.8.0",
+    "google-cloud-storage>=2.10.0",
+]
+# Development tools
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.4.0",
+]
+# Everything
+all = [
+    "google-genai>=0.8.0",
+    "google-cloud-storage>=2.10.0",
+]
+
+[project.scripts]
+ai-video-gen = "ai_video_gen.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/JuanLara18/ai-video-gen"
+Repository = "https://github.com/JuanLara18/ai-video-gen"
+Issues = "https://github.com/JuanLara18/ai-video-gen/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ai_video_gen*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]

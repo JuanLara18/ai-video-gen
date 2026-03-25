@@ -1,78 +1,73 @@
-# Veo Video Pipeline
+# ai-video-gen
 
-A structured video generation pipeline built on **Google Veo 3.1** (Vertex AI). Define your video as a sequence of clips in JSON, and the pipeline handles batch generation, visual consistency enforcement, logo overlays, and presentation-ready output with sequential naming.
+**JSON-driven batch video generation from multiple AI providers.**
 
-Built for producing **corporate videos, product demos, and AI-generated visual narratives** from structured prompts — without touching a video editor until the final assembly.
+Define your video as a sequence of clips in a JSON file. The pipeline handles batch generation, visual consistency enforcement, logo overlays, and presentation-ready output — without touching a video editor until the final assembly.
+
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/JuanLara18/ai-video-gen/pulls)
+
+---
+
+## Results
+
+<table>
+  <tr>
+    <td align="center"><img src="assets/demo_1.gif" width="220"/><br/><sub>Digital twin transformation</sub></td>
+    <td align="center"><img src="assets/demo_2.gif" width="220"/><br/><sub>Holographic data overlay</sub></td>
+    <td align="center"><img src="assets/demo_3.gif" width="220"/><br/><sub>Cinematic aerial shot</sub></td>
+    <td align="center"><img src="assets/demo_4.gif" width="220"/><br/><sub>Abstract closing sequence</sub></td>
+  </tr>
+</table>
+
+*Generated with Google Veo 3.1 via Vertex AI.*
+
+---
 
 ## Features
 
-- **JSON-driven clip definitions** — describe each clip's cinematography, subject, action, context, style, and audio in structured prompts
+- **JSON-driven clips** — describe cinematography, subject, action, setting, and audio in structured prompts
+- **Multi-provider** — pluggable provider architecture; currently ships with Google Veo (Vertex AI), with more providers coming
 - **Batch generation** — generate all clips, a specific block, or individual clips by ID
-- **Style packs** — enforce visual consistency across all clips with reusable style + negative prompt presets
-- **Reference images** — anchor Veo's output to real photographs or generated reference frames for visual coherence
-- **Presentation mode** — curate a subset of clips in narrative order, auto-sorted by `presentation_order`
-- **Logo overlay** — apply a consistent brand logo to all generated videos via ffmpeg post-processing
-- **Dependency-aware generation** — extract last frames from generated clips to use as start frames for the next
-- **Dry-run mode** — preview everything without spending API credits
+- **Style packs** — enforce visual consistency across all clips with reusable style + negative-prompt presets
+- **Reference images** — anchor the model's output to a real photo or a generated frame
+- **Presentation mode** — curate a narrative clip sequence ordered by `presentation_order`
+- **Logo overlay** — burn a PNG logo onto every generated video via ffmpeg post-processing
 - **Variant generation** — generate up to 4 variants per clip and pick the best
+- **Dry-run mode** — preview everything without spending API credits
 
-## Architecture
+---
 
-```mermaid
-flowchart TD
-    subgraph inputs [Input Layer]
-        Prompts["prompts.json"]
-        StylePacks["style_packs.json"]
-        RefImages["Reference Images"]
-        Logo["logo.png"]
-    end
+## Supported Providers
 
-    subgraph pipeline [Processing Pipeline]
-        Loader["Clip Loader"]
-        Normalizer["Style Normalizer"]
-        VeoAPI["Veo 3.1 API\n(Vertex AI)"]
-        LogoOverlay["Logo Overlay\n(ffmpeg)"]
-    end
+| Provider | Flag | Status |
+|----------|------|--------|
+| Google Veo 3.1 (Vertex AI) | `--provider veo` | ✅ Available |
+| Runway Gen-3 / Gen-4 | `--provider runway` | 🔜 Coming soon |
+| Kling | `--provider kling` | 🔜 Coming soon |
+| MiniMax / Hailuo | `--provider minimax` | 🔜 Coming soon |
+| OpenAI Sora | `--provider sora` | 🔜 Coming soon |
 
-    subgraph outputLayer [Output]
-        RawVideos["output/*.mp4"]
-        FinalSequence["output/presentacion/\n01_INTRO_name.mp4\n02_SECTION_name.mp4\n..."]
-    end
+Want to add a provider? See [docs/providers.md](docs/providers.md).
 
-    Prompts --> Loader
-    StylePacks --> Normalizer
-    Loader --> Normalizer
-    RefImages --> VeoAPI
-    Normalizer --> VeoAPI
-    VeoAPI --> RawVideos
-    RawVideos --> LogoOverlay
-    Logo --> LogoOverlay
-    LogoOverlay --> FinalSequence
-```
+---
 
 ## Quick Start
 
-### Prerequisites
-
-- Python 3.10+
-- Google Cloud account with [Vertex AI enabled](https://console.cloud.google.com/vertex-ai)
-- `gcloud` CLI ([install](https://cloud.google.com/sdk/docs/install))
-- A GCS bucket for video storage
-
-### 1. Clone and setup
+### 1. Clone and install
 
 ```bash
-git clone https://github.com/JuanLara18/veo-video-pipeline.git
-cd veo-video-pipeline
+git clone https://github.com/JuanLara18/ai-video-gen.git
+cd ai-video-gen
 
 python -m venv .venv
-
 # Windows
 .venv\Scripts\activate
-# Linux/Mac
+# Linux / macOS
 source .venv/bin/activate
 
-pip install -r requirements.txt
+pip install -e ".[veo]"
 ```
 
 ### 2. Authenticate with Google Cloud
@@ -91,189 +86,177 @@ cp .env.example .env
 # Edit .env with your project ID, region, and bucket name
 ```
 
-| Variable     | Description                     | Example              |
-|--------------|---------------------------------|----------------------|
-| `PROJECT_ID` | Google Cloud project ID         | `my-gcp-project`    |
-| `LOCATION`   | Vertex AI region                | `us-central1`       |
-| `GCS_BUCKET` | GCS bucket (without `gs://`)    | `my-veo-bucket`     |
-
 ### 4. Create your prompts
 
-Copy the example and customize:
+```bash
+cp examples/prompts.example.json input/prompts.json
+# Edit input/prompts.json with your clip descriptions
+```
+
+### 5. Generate
 
 ```bash
-cp input/prompts.example.json input/prompts.json
+# Preview without API calls
+python main.py --dry-run
+
+# Generate a single clip
+python main.py --clips clip_1_1a --variants 1
+
+# Full production run
+python main.py --presentation --style-pack corporate_clean --variants 4 --logo-overlay --audio
 ```
 
-Each clip is a JSON object:
-
-```json
-{
-  "clip_id": "clip_1_1a",
-  "block": "Block 1 - Opening",
-  "scene": "Scene 1.1 - Overview",
-  "prompt": "Wide aerial shot of a modern facility...",
-  "negative_prompt": "text on screen, watermark, face distortion",
-  "duration": 8,
-  "reference_image_path": "input/images/ref_aerial.jpg",
-  "notes": ""
-}
-```
-
-Clips can optionally include `presentation_order` and `presentation_section` fields to be included in presentation mode.
+---
 
 ## Usage
 
-### List all clips
-
 ```bash
+# List all clips
 python main.py --list
 
-# Only presentation clips (narrative order)
+# List only presentation clips in narrative order
 python main.py --list --presentation
-```
 
-### Dry-run (no API calls, no cost)
+# Generate an entire block with 2 variants
+python main.py --block "Block 1" --variants 2
 
-```bash
-python main.py --dry-run
-python main.py --dry-run --presentation --style-pack corporate_clean
-```
-
-### Generate clips
-
-```bash
-# Single clip
-python main.py --clips clip_1_1a --variants 1
-
-# Entire block
-python main.py --block "Block 1" --variants 1
-
-# All presentation clips with style enforcement
+# Apply a style pack for visual consistency
 python main.py --presentation --style-pack corporate_clean --variants 1
 
-# Production run: 4 variants + logo + audio
-python main.py --presentation --style-pack corporate_clean --variants 4 --logo-overlay --audio
+# With logo overlay
+python main.py --clips clip_1_1a --logo-overlay --logo-position bottom-right --logo-scale 0.08
 ```
 
 ### All options
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--list` | List clips and exit | |
 | `--dry-run` | Preview without API calls | |
-| `--clips IDS` | Filter by clip IDs (comma-separated) | all |
+| `--list` | List clips and exit | |
+| `--clips IDS` | Comma-separated clip IDs to generate | all |
 | `--block NAME` | Filter by block name | all |
 | `--presentation` | Use curated presentation sequence | off |
+| `--provider NAME` | Video generation provider | `veo` |
 | `--style-pack NAME` | Apply style pack for visual consistency | none |
-| `--variants N` | Variants per clip (1-4) | 1 |
+| `--variants N` | Variants per clip (1–4) | `1` |
 | `--audio` | Enable audio generation | off |
 | `--logo-overlay` | Apply logo overlay (needs ffmpeg) | off |
 | `--logo-path PATH` | Logo file path | `input/images/logo.png` |
 | `--logo-position POS` | `top-left`, `top-right`, `bottom-left`, `bottom-right`, `center` | `bottom-right` |
-| `--logo-scale N` | Logo scale relative to video width (0.0-1.0) | 0.08 |
-| `--logo-opacity N` | Logo opacity (0.0-1.0) | 0.85 |
-| `--logo-margin N` | Margin from edge in pixels | 30 |
+| `--logo-scale N` | Logo scale relative to video width (0.0–1.0) | `0.08` |
+| `--logo-opacity N` | Logo opacity (0.0–1.0) | `0.85` |
+| `--logo-margin N` | Margin from edge in pixels | `30` |
 
-## Style Packs
+---
 
-Style packs enforce visual consistency by appending a style suffix to every prompt and merging a base negative prompt (without duplicating existing restrictions).
+## Prompt Structure
 
-Create your own in `style_packs.json`:
-
-```bash
-cp style_packs.example.json style_packs.json
-```
+Each clip in `input/prompts.json` follows this pattern:
 
 ```json
 {
-  "my_brand": {
-    "style_suffix": "Consistent brand identity. Blue and white palette...",
-    "negative_prompt_base": "text on screen, watermark, low quality..."
-  }
+  "clip_id": "clip_1_1a",
+  "block": "Block 1 - Opening",
+  "scene": "Scene 1.1 - The facility",
+  "prompt": "Wide aerial crane shot slowly descending over a modern facility...",
+  "negative_prompt": "text on screen, watermark, face distortion",
+  "duration": 8,
+  "aspect_ratio": "16:9",
+  "reference_image_path": "input/images/ref_aerial.jpg",
+  "notes": "Use real aerial photo as start frame",
+  "presentation_order": 1,
+  "presentation_section": "INTRO"
 }
 ```
 
-If `style_packs.json` doesn't exist, a built-in `corporate_clean` pack is available.
+See [docs/prompt-engineering.md](docs/prompt-engineering.md) for tips on writing prompts that produce better results.
 
-## Presentation Mode
-
-For curated video presentations, mark clips with `presentation_order` in your `prompts.json`:
-
-```json
-{
-  "clip_id": "clip_3_1a",
-  "presentation_order": 2,
-  "presentation_section": "DIGITAL_TWIN",
-  "presentation_adjustments": "Make contrast more pronounced"
-}
-```
-
-Then generate only those clips in narrative order:
-
-```bash
-python main.py --presentation --style-pack corporate_clean --variants 1 --logo-overlay
-```
-
-A PowerShell orchestration script (`generate_presentation.ps1`) automates the full flow: dependency-aware generation, frame extraction, logo overlay, and final renaming to `output/presentacion/01_SECTION_name.mp4`.
-
-## Logo Overlay
-
-Overlay a consistent logo on every generated video. Requires **ffmpeg** — automatically detected from system PATH or from the `imageio-ffmpeg` Python package (installed via `requirements.txt`).
-
-```bash
-python main.py --clips clip_1_1a --variants 1 --logo-overlay --logo-position bottom-right --logo-scale 0.08
-```
-
-Output: `clip_1_1a.mp4` (original) + `clip_1_1a_logo.mp4` (with logo).
+---
 
 ## Project Structure
 
 ```
-veo-video-pipeline/
-├── .env.example                 # Environment template
-├── .gitignore
-├── LICENSE
-├── README.md
-├── requirements.txt
-├── main.py                      # Core pipeline
-├── generate_presentation.ps1    # Orchestration script (Windows)
-├── style_packs.example.json     # Style pack template
-├── input/
-│   ├── prompts.example.json     # Prompt structure template
-│   ├── presentation_sequence.example.json
-│   └── images/                  # Reference images and logo (gitignored)
-└── output/                      # Generated videos (gitignored)
-    └── presentacion/            # Final renamed sequence
+ai-video-gen/
+├── ai_video_gen/
+│   ├── cli.py              # CLI entrypoint
+│   ├── config.py           # Environment variables and defaults
+│   ├── pipeline.py         # Clip loading, filtering, style packs
+│   ├── postprocess.py      # Logo overlay, GIF conversion (ffmpeg)
+│   ├── utils.py            # Shared helpers
+│   └── providers/
+│       ├── base.py         # BaseProvider abstract class
+│       └── veo.py          # Google Veo implementation
+├── docs/                   # Detailed documentation
+├── examples/               # Example JSON files to copy and customise
+├── assets/                 # Demo GIFs for this README
+├── input/                  # Your prompts and reference images (gitignored)
+├── output/                 # Generated videos (gitignored)
+├── .env.example
+├── pyproject.toml
+└── main.py                 # Thin entrypoint
 ```
 
-## Veo 3.1 Specs
+---
 
-| Parameter       | Supported values         |
-|-----------------|--------------------------|
-| Format          | MP4                      |
-| FPS             | 24                       |
-| Resolution      | 720p, 1080p              |
-| Aspect Ratio    | 16:9, 9:16               |
-| Duration/clip   | 4, 6, or 8 seconds       |
-| Max image input | 20 MB                    |
-| Videos/prompt   | Up to 4                  |
-| Prompt language | English                  |
-| Rate limit      | 50 req/min/model         |
+## Documentation
 
-## Prompt Engineering Tips
+| Topic | Link |
+|-------|------|
+| Full setup guide | [docs/getting-started.md](docs/getting-started.md) |
+| Adding a new provider | [docs/providers.md](docs/providers.md) |
+| Style packs | [docs/style-packs.md](docs/style-packs.md) |
+| Prompt engineering tips | [docs/prompt-engineering.md](docs/prompt-engineering.md) |
+| Presentation mode | [docs/presentation-mode.md](docs/presentation-mode.md) |
 
-Each prompt follows a 5-part formula for best results with Veo 3.1:
+---
 
-**[Camera movement] + [Subject] + [Action] + [Context/Setting] + [Style & Audio]**
+## Architecture
 
-- Lead with camera type and movement (e.g., "Slow dolly-in", "Wide aerial crane shot")
-- One dominant action per clip
-- Optimal length: 100-150 words (3-6 sentences)
-- Include explicit audio description (Veo generates matching sound design)
-- All on-screen text should be added in post-production (Veo doesn't reliably render text)
-- Use negative prompts to avoid common artifacts
+```mermaid
+flowchart TD
+    subgraph inputs [Input]
+        Prompts["input/prompts.json"]
+        StylePacks["style_packs.json"]
+        RefImages["Reference Images"]
+        Logo["logo.png"]
+    end
+
+    subgraph pipeline [Pipeline]
+        Loader["Clip Loader"]
+        StyleNorm["Style Normalizer"]
+        Provider["Provider\n(Veo / Runway / ...)"]
+        LogoStep["Logo Overlay\nffmpeg"]
+    end
+
+    subgraph outputLayer [Output]
+        RawVideos["output/*.mp4"]
+        LogoVideos["output/*_logo.mp4"]
+    end
+
+    Prompts --> Loader
+    StylePacks --> StyleNorm
+    Loader --> StyleNorm
+    RefImages --> Provider
+    StyleNorm --> Provider
+    Provider --> RawVideos
+    RawVideos --> LogoStep
+    Logo --> LogoStep
+    LogoStep --> LogoVideos
+```
+
+---
+
+## Contributing
+
+Contributions are welcome — especially new provider implementations.
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-provider`
+3. Implement your changes (see [docs/providers.md](docs/providers.md) for the provider guide)
+4. Open a pull request
+
+---
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE).

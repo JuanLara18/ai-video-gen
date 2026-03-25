@@ -3,20 +3,22 @@
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
 *.egg-info/
 dist/
 build/
+*.egg
+.eggs/
 
 # Environment
 .env
 
-# Generated output
+# Generated output (gitignored to keep repo clean)
 output/
 
-# Proprietary content (use *.example.json as templates)
+# User-specific input files (private prompts and images)
 input/prompts.json
 input/prompts.md
-input/presentation_sequence.json
 input/images/
 style_packs.json
 
@@ -31,3 +33,6 @@ style_packs.json
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Packaging
+*.dist-info/
