@@ -14,14 +14,14 @@ Define your video as a sequence of clips in a JSON file. The pipeline handles ba
 
 <table>
   <tr>
-    <td align="center"><img src="assets/demo_1.gif" width="220"/><br/><sub>Digital twin transformation</sub></td>
-    <td align="center"><img src="assets/demo_2.gif" width="220"/><br/><sub>Holographic data overlay</sub></td>
-    <td align="center"><img src="assets/demo_3.gif" width="220"/><br/><sub>Cinematic aerial shot</sub></td>
-    <td align="center"><img src="assets/demo_4.gif" width="220"/><br/><sub>Abstract closing sequence</sub></td>
+    <td align="center"><img src="assets/demo_1.gif" width="220"/><br/><sub>🌸 Spring — Cherry blossom rain</sub></td>
+    <td align="center"><img src="assets/demo_2.gif" width="220"/><br/><sub>⛈️ Summer — Storm at the edge of the world</sub></td>
+    <td align="center"><img src="assets/demo_3.gif" width="220"/><br/><sub>🍂 Autumn — Mirror lake at dawn</sub></td>
+    <td align="center"><img src="assets/demo_4.gif" width="220"/><br/><sub>❄️ Winter — Aurora over the frozen forest</sub></td>
   </tr>
 </table>
 
-*Generated with Google Veo 3.1 via Vertex AI.*
+*All four clips generated with this pipeline using Google Veo 3.1 via Vertex AI.*
 
 ---
 
