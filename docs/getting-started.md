@@ -161,6 +161,116 @@ output/
 
 ---
 
+---
+
+## All CLI Options
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `--dry-run` | Preview without API calls | |
+| `--list` | List clips and exit | |
+| `--clips IDS` | Comma-separated clip IDs to generate | all |
+| `--block NAME` | Filter by block name | all |
+| `--presentation` | Use curated presentation sequence | off |
+| `--provider NAME` | Video generation provider | `veo` |
+| `--style-pack NAME` | Apply style pack for visual consistency | none |
+| `--variants N` | Variants per clip (1–4) | `1` |
+| `--audio` | Enable audio generation | off |
+| `--logo-overlay` | Apply logo overlay (needs ffmpeg) | off |
+| `--logo-path PATH` | Logo file path | `input/images/logo.png` |
+| `--logo-position POS` | `top-left`, `top-right`, `bottom-left`, `bottom-right`, `center` | `bottom-right` |
+| `--logo-scale N` | Logo scale relative to video width (0.0–1.0) | `0.08` |
+| `--logo-opacity N` | Logo opacity (0.0–1.0) | `0.85` |
+| `--logo-margin N` | Margin from edge in pixels | `30` |
+
+---
+
+## Prompt Structure
+
+Each clip in `input/prompts.json` follows this schema:
+
+```json
+{
+  "clip_id": "clip_1_1a",
+  "block": "Block 1 - Opening",
+  "scene": "Scene 1.1 - The facility",
+  "prompt": "Wide aerial crane shot slowly descending over a modern facility...",
+  "negative_prompt": "text on screen, watermark, face distortion",
+  "duration": 8,
+  "aspect_ratio": "16:9",
+  "reference_image_path": "input/images/ref_aerial.jpg",
+  "notes": "Internal note — not sent to the API",
+  "presentation_order": 1,
+  "presentation_section": "INTRO",
+  "presentation_adjustments": "Increase contrast"
+}
+```
+
+See [prompt-engineering.md](prompt-engineering.md) for tips on writing effective prompts.
+
+---
+
+## Project Structure
+
+```
+ai-video-gen/
+├── ai_video_gen/
+│   ├── cli.py              # CLI entrypoint
+│   ├── config.py           # Environment variables and defaults
+│   ├── pipeline.py         # Clip loading, filtering, style packs
+│   ├── postprocess.py      # Logo overlay, GIF conversion (ffmpeg)
+│   ├── utils.py            # Shared helpers
+│   └── providers/
+│       ├── base.py         # BaseProvider abstract class
+│       └── veo.py          # Google Veo implementation
+├── docs/                   # Detailed documentation
+├── examples/               # Example JSON files to copy and customise
+├── assets/                 # Demo GIFs
+├── input/                  # Your prompts and reference images (gitignored)
+├── output/                 # Generated videos (gitignored)
+├── .env.example
+├── pyproject.toml
+└── main.py                 # Thin entrypoint
+```
+
+---
+
+## Architecture
+
+```mermaid
+flowchart TD
+    subgraph inputs [Input]
+        Prompts["input/prompts.json"]
+        StylePacks["style_packs.json"]
+        RefImages["Reference Images"]
+        Logo["logo.png"]
+    end
+
+    subgraph pipeline [Pipeline]
+        Loader["Clip Loader"]
+        StyleNorm["Style Normalizer"]
+        Provider["Provider\n(Veo / Runway / ...)"]
+        LogoStep["Logo Overlay\nffmpeg"]
+    end
+
+    subgraph outputLayer [Output]
+        RawVideos["output/*.mp4"]
+        LogoVideos["output/*_logo.mp4"]
+    end
+
+    Prompts --> Loader
+    StylePacks --> StyleNorm
+    Loader --> StyleNorm
+    RefImages --> Provider
+    StyleNorm --> Provider
+    Provider --> RawVideos
+    RawVideos --> LogoStep
+    Logo --> LogoStep
+    LogoStep --> LogoVideos
+```
+
+---
+
 ## Next Steps
 
 - [Style Packs](style-packs.md) — enforce visual consistency across all clips
